@@ -1,779 +1,548 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com;">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luyện thi lập trình thi đấu</title>
-    <link rel="icon" type="image/png" href="images/favicon.png">
-    <link rel="stylesheet" href="trang-chu.css"> 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HS Academy - Học tập</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<link rel="stylesheet" href="style.css">
+
 </head>
+
+
 <body>
 
-    <header class="top-navbar">
-        
-        <div class="top-nav-logo" onclick="window.location.href='trang-chu.html'" style="cursor: pointer;">
-            <img src="images/logo.png" alt="HS Logo" style="height: 40px;">
-        </div>
-        
-        <nav class="top-nav-links">
-            <a href="trang-chu.html" class="active">Trang Chủ</a>
-            <a href="khoa-hoc.html">Khóa Học</a>
-            <a href="sanh-de-thi.html">Phòng Luyện</a>
-            <a href="#">Tài Liệu</a>
-            <a href="#">Tin Tức</a>
-        </nav>
-        
-        <div class="top-nav-right">
-            <div class="search-bar">
-                <i class="fa-solid fa-magnifying-glass" style="color: #999;"></i>
-                <input type="text" placeholder="Tìm kiếm tài liệu, bài giảng...">
-            </div>
-            
-            <i class="fa-solid fa-bell" style="color: #666; font-size: 18px; cursor: pointer;"></i>
-
-            <div class="vip-top-entry" id="vip-top-entry">
-                <button type="button" class="vip-toggle-btn" id="nut-mo-khung-vip">
-                    <i class="fa-solid fa-ticket"></i> Nhập mã VIP
-                </button>
-                <div class="vip-popover" id="khung-vip-top">
-                    <div class="vip-popover-head">
-                        <strong>Kích hoạt mã VIP</strong>
-                        <button type="button" class="vip-popover-close" id="nut-dong-khung-vip">
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-                    </div>
-                    <p class="vip-popover-note" id="ghi-chu-vip-top">Nhập mã VIP để mở đúng gói học hoặc gói phòng luyện của bạn ngay trên tài khoản hiện tại.</p>
-
-                    <div class="vip-migration-box" id="khung-ma-chuyen-doi">
-                        <div class="vip-migration-label">
-                            <i class="fa-solid fa-sparkles"></i> Mã quyền dành riêng cho bạn
-                        </div>
-                        <div class="vip-migration-code" id="ma-vip-chuyen-doi">----</div>
-                        <div class="vip-migration-list" id="goi-vip-chuyen-doi"></div>
-                        <div class="vip-migration-actions">
-                            <button type="button" class="vip-secondary-btn" id="nut-sao-chep-ma-chuyen-doi">Sao chép mã</button>
-                            <button type="button" class="vip-primary-btn" id="nut-dung-ma-chuyen-doi">Dùng mã này</button>
-                        </div>
-                    </div>
-
-                    <div class="vip-input-row">
-                        <input id="ma-vip-input-trang-chu" type="text" placeholder="Nhập mã VIP của bạn">
-                        <button type="button" class="vip-primary-btn" id="kich-hoat-ma-vip-trang-chu">Kích hoạt</button>
-                    </div>
-                    <div class="vip-feedback" id="ma-vip-feedback-trang-chu"></div>
-                </div>
-            </div>
-            
-            <div style="height: 25px; width: 1px; background: #ddd; margin: 0 5px;"></div>
-            
-            <div class="user-profile-top" id="user-profile" style="display: none;" onclick="window.logout()">
-                <img id="nav-avatar" src="images/avatar-default.png" alt="Avatar" onerror="this.style.display='none'" style="width: 35px; height: 35px; border-radius: 50%; border: 1px solid #ce1f28; padding: 2px;">
-                <span id="nav-name">Học viên</span>
-                <i class="fa-solid fa-right-from-bracket" style="font-size: 14px; color: #ce1f28; margin-left: 5px;" title="Đăng xuất"></i>
-            </div>
-            
-            <div id="auth-buttons" style="display: flex; gap: 10px;">
-                <a href="dang-nhap.html" style="font-size: 14px; font-weight: bold; color: #15397f; text-decoration: none; padding: 8px 18px; border: 2px solid #15397f; border-radius: 20px;">Đăng nhập</a>
-                <a href="dang-ky.html" style="font-size: 14px; font-weight: bold; color: white; background: #ce1f28; text-decoration: none; padding: 8px 18px; border: 2px solid #ce1f28; border-radius: 20px;">Đăng ký</a>
-            </div>
-        </div>
-    </header>
-
-    <div class="dashboard-container">
-        
-        <aside class="sidebar-left">
-            <div class="user-brief" id="sidebar-user" style="display: none;">
-                <img src="images/avatar-default.png" alt="User" onerror="this.style.display='none'">
-                <div>
-                    <div style="font-weight: bold; color: #15397f; font-size: 16px;" id="side-name">Học viên</div>
-                    <div style="font-size: 12px; color: #888;">Thành viên HS</div>
-                </div>
-            </div>
-
-            <ul class="sidebar-menu">
-                <div class="sidebar-title">Góc Học Tập</div>
-                <li><a href="trang-chu.html" class="active"><i class="fa-solid fa-compass"></i> Khám phá</a></li>
-                <li><a href="khoa-hoc.html"><i class="fa-solid fa-clapperboard"></i> Khóa học</a></li>
-                <li><a href="sanh-de-thi.html"><i class="fa-solid fa-file-pen"></i> Phòng luyện</a></li>
-                <li><a href="lich-su-cua-toi.html"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử làm bài</a></li>
-                <li><a href="bang-xep-hang.html"><i class="fa-solid fa-trophy"></i> Bảng xếp hạng</a></li>
-                <li><a href="#"><i class="fa-solid fa-chart-pie"></i> Phân tích năng lực</a></li>
-                
-                <div class="sidebar-title" style="margin-top: 30px;">Tài Khoản</div>
-                <li><a href="ca-nhan.html"><i class="fa-solid fa-user"></i> Cá nhân</a></li>
-                <li><a href="#" onclick="window.logout()"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a></li>
-                
-                <div class="sidebar-title" style="margin-top: 30px;">Hỗ Trợ</div>
-                
-                <li><a href="https://zalo.me/0394949755" target="_blank"><i class="fa-solid fa-headset"></i> Liên hệ tư vấn</a></li>
-                
-                <li><a href="https://www.facebook.com/profile.php?id=61575503878571&locale=vi_VN" target="_blank" style="color: #1877f2;"><i class="fa-brands fa-facebook"></i> Cộng đồng HS</a></li>
-                
-                <li><a href="https://www.youtube.com/@kênh-cua-ban" target="_blank" style="color: #ff0000;"><i class="fa-brands fa-youtube"></i> Youtube</a></li>
-                
-                <li><a href="https://www.tiktok.com/@hs.luyn.thi.tsa?lang=vi-VN" target="_blank" style="color: #000000;"><i class="fa-brands fa-tiktok"></i> Tiktok</a></li>
-            </ul>
-        </aside>
-
-        <main class="main-content">
-            <div class="banner-hero">
-                <img src="images/anhnentrungtam.png" alt="Banner Trung Tâm HS">
-            </div>
-
-            <div class="slogan-box">
-                <div class="slogan-text">KỶ LUẬT TẠO NÊN SỨC MẠNH - BỨT PHÁ MỌI GIỚI HẠN</div>
-                <div class="slogan-sub">Cùng Trung tâm HS chinh phục đỉnh cao tri thức, tự tin bước vào cánh cổng đại học mơ ước!</div>
-            </div>
-        </main>
-
-        <aside class="sidebar-right">
-            <div class="sidebar-right-title">Chọn Kỳ Thi Của Bạn</div>
-            
-            <div class="portal-card card-hsa">
-                <img src="images/image_9783be.png" alt="Logo HSA" class="portal-logo">
-                <h3 class="portal-title">Đánh Giá Năng Lực</h3>
-                <p class="portal-desc">Mô phỏng chuẩn cấu trúc ĐHQG Hà Nội. Tư duy định lượng, định tính & khoa học.</p>
-                <a href="sanh-de-thi.html?loai=hsa" class="btn-portal btn-hsa">
-                    Vào phòng thi HSA <i class="fa-solid fa-arrow-right"></i>
-                </a>
-            </div>
-
-            <div class="portal-card card-tsa">
-                <img src="images/image_9783b9.png" alt="Logo TSA" class="portal-logo">
-                <h3 class="portal-title">Đánh Giá Tư Duy</h3>
-                <p class="portal-desc">Đề thi độc quyền ĐH Bách Khoa. Tư duy Toán học, Đọc hiểu & Khoa học.</p>
-                <a href="sanh-de-thi.html" class="btn-portal btn-tsa">
-                    Vào phòng thi TSA <i class="fa-solid fa-arrow-right"></i>
-                </a>
-            </div>
-        </aside>
-
-    </div>
-
-    <script src="vip-core.js?v=20260702-1"></script>
-    <script>
-        (function() {
-            const heThongVip = window.heThongVip;
-            if (!heThongVip || typeof heThongVip.layGoiVip !== "function") return;
-
-            if (typeof heThongVip.hopNhatDanhSachGoi !== "function") {
-                heThongVip.hopNhatDanhSachGoi = function(danhSach) {
-                    const daGap = new Set();
-                    return (Array.isArray(danhSach) ? danhSach : [])
-                        .map(item => {
-                            if (!item) return null;
-                            if (typeof item === "string") return heThongVip.layGoiVip(item);
-                            const goiMacDinh = heThongVip.layGoiVip(item.maGoi || item.id || "") || {};
-                            return {
-                                ...goiMacDinh,
-                                ...item,
-                                maGoi: item.maGoi || item.id || goiMacDinh.maGoi || "",
-                                tenGoi: item.tenGoi || goiMacDinh.tenGoi || item.maGoi || ""
-                            };
-                        })
-                        .filter(goi => {
-                            if (!goi || !goi.maGoi || daGap.has(goi.maGoi)) return false;
-                            daGap.add(goi.maGoi);
-                            return true;
-                        });
-                };
-            }
-
-            if (typeof heThongVip.layDanhSachGoiTuMa !== "function") {
-                heThongVip.layDanhSachGoiTuMa = function(duLieuMa) {
-                    if (!duLieuMa) return [];
-                    if (Array.isArray(duLieuMa.danhSachGoi) && duLieuMa.danhSachGoi.length) {
-                        return heThongVip.hopNhatDanhSachGoi(duLieuMa.danhSachGoi);
-                    }
-                    if (!duLieuMa.maGoi) return [];
-                    return heThongVip.hopNhatDanhSachGoi([{
-                        maGoi: duLieuMa.maGoi,
-                        tenGoi: duLieuMa.tenGoi,
-                        nhom: duLieuMa.nhom,
-                        he: duLieuMa.he,
-                        truongQuyen: duLieuMa.truongQuyen,
-                        truongHan: duLieuMa.truongHan
-                    }]);
-                };
-            }
-
-            if (typeof heThongVip.layTenDanhSachGoi !== "function") {
-                heThongVip.layTenDanhSachGoi = function(danhSachGoi) {
-                    return heThongVip.hopNhatDanhSachGoi(danhSachGoi)
-                        .map(goi => goi.tenGoi || goi.maGoi)
-                        .join(", ");
-                };
-            }
-
-            if (typeof heThongVip.taoCapNhatQuyenTuDanhSachGoi !== "function") {
-                heThongVip.taoCapNhatQuyenTuDanhSachGoi = function(danhSachGoi, ngayHetHanMacDinh = null) {
-                    const capNhat = {};
-                    heThongVip.hopNhatDanhSachGoi(danhSachGoi).forEach(goi => {
-                        if (!goi.truongQuyen || !goi.truongHan) return;
-                        capNhat[goi.truongQuyen] = "Da_Duyet";
-                        capNhat[goi.truongHan] = goi.ngayHetHanGoi ?? ngayHetHanMacDinh ?? null;
-                    });
-                    return capNhat;
-                };
-            }
-
-            if (typeof heThongVip.coQuyenGoiVip !== "function") {
-                heThongVip.coQuyenGoiVip = function(duLieuHocSinh, maGoi) {
-                    const goi = heThongVip.layGoiVip(maGoi);
-                    return !!goi && heThongVip.coQuyenHieuLuc(duLieuHocSinh, goi.truongQuyen, goi.truongHan);
-                };
-            }
-
-            if (typeof heThongVip.laGiaTriDaDuyet !== "function") {
-                heThongVip.laGiaTriDaDuyet = function(giaTri) {
-                    if (giaTri === true) return true;
-                    const giaTriChuan = String(giaTri || "")
-                        .trim()
-                        .toLowerCase()
-                        .normalize("NFD")
-                        .replace(/[\u0300-\u036f]/g, "")
-                        .replace(/đ/g, "d")
-                        .replace(/[^a-z0-9]+/g, "_")
-                        .replace(/^_+|_+$/g, "");
-                    return ["da_duyet", "duyet", "approved", "true", "1"].includes(giaTriChuan);
-                };
-            }
-
-            if (typeof heThongVip.layDanhSachGoiQuyenCuDaDangKy !== "function") {
-                heThongVip.layDanhSachGoiQuyenCuDaDangKy = function(duLieuHocSinh) {
-                    const ketQua = [];
-                    if (!duLieuHocSinh) return ketQua;
-
-                    if (heThongVip.laGiaTriDaDuyet(duLieuHocSinh.VIP_Khoa_TSA) || heThongVip.laGiaTriDaDuyet(duLieuHocSinh.Goi_Khoa_Hoc)) {
-                        ketQua.push(heThongVip.layGoiVip("khoa_tsa_nen_tang_2027"));
-                    }
-
-                    if (heThongVip.laGiaTriDaDuyet(duLieuHocSinh.VIP_Luyen_TSA) || heThongVip.laGiaTriDaDuyet(duLieuHocSinh.Goi_Phong_Luyen)) {
-                        ketQua.push(heThongVip.layGoiVip("phong_luyen_tsa"));
-                    }
-
-                    if (heThongVip.laGiaTriDaDuyet(duLieuHocSinh.VIP_Khoa_HSA)) {
-                        ketQua.push(heThongVip.layGoiVip("khoa_hsa"));
-                    }
-
-                    if (heThongVip.laGiaTriDaDuyet(duLieuHocSinh.VIP_Luyen_HSA)) {
-                        ketQua.push(heThongVip.layGoiVip("phong_luyen_hsa"));
-                    }
-
-                    return heThongVip.hopNhatDanhSachGoi(ketQua);
-                };
-            }
-
-            if (typeof heThongVip.layDanhSachGoiQuyenCuCanChuyenDoi !== "function") {
-                heThongVip.layDanhSachGoiQuyenCuCanChuyenDoi = function(duLieuHocSinh) {
-                    return heThongVip.layDanhSachGoiQuyenCuDaDangKy(duLieuHocSinh)
-                        .filter(goi => !heThongVip.coQuyenGoiVip(duLieuHocSinh, goi.maGoi));
-                };
-            }
-
-            if (typeof heThongVip.taoMaVipHeThong !== "function") {
-                heThongVip.taoMaVipHeThong = function(hatGiong) {
-                    const kyTuMaVip = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-                    const nguon = String(hatGiong || "HS");
-                    let hash = 2166136261;
-                    for (let index = 0; index < nguon.length; index += 1) {
-                        hash ^= nguon.charCodeAt(index);
-                        hash = Math.imul(hash, 16777619);
-                    }
-                    let raw = "HS";
-                    while (raw.length < 14) {
-                        hash = Math.imul(hash ^ raw.length, 2654435761) >>> 0;
-                        raw += kyTuMaVip[hash % kyTuMaVip.length];
-                    }
-                    return heThongVip.dinhDangMaVip(raw.slice(0, 14));
-                };
-            }
-        })();
-    </script>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, runTransaction, serverTimestamp, Timestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBnfAtPnOb_xoVlLeWxjCW5tM1TBzbD8Us",
-            authDomain: "hs-center-tsa.firebaseapp.com",
-            projectId: "hs-center-tsa",
-            storageBucket: "hs-center-tsa.firebasestorage.app",
-            messagingSenderId: "743599220534",
-            appId: "1:743599220534:web:d7931ed278a04b09be3597",
-            measurementId: "G-SXT38N3F69"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        const authButtons = document.getElementById("auth-buttons");
-        const userProfile = document.getElementById("user-profile");
-        const sidebarUser = document.getElementById("sidebar-user");
-        const navName = document.getElementById("nav-name");
-        const sideName = document.getElementById("side-name");
-        const vipTopEntry = document.getElementById("vip-top-entry");
-        const khungVipTop = document.getElementById("khung-vip-top");
-        const khungMaChuyenDoi = document.getElementById("khung-ma-chuyen-doi");
-        const maVipChuyenDoi = document.getElementById("ma-vip-chuyen-doi");
-        const goiVipChuyenDoi = document.getElementById("goi-vip-chuyen-doi");
-        const inputMaVipTrangChu = document.getElementById("ma-vip-input-trang-chu");
-        const feedbackMaVipTrangChu = document.getElementById("ma-vip-feedback-trang-chu");
-        let userDangNhap = null;
-
-        function datThongBaoMaVipTrangChu(noiDung = "", loai = "") {
-            feedbackMaVipTrangChu.textContent = noiDung;
-            feedbackMaVipTrangChu.className = "vip-feedback";
-            if (loai) feedbackMaVipTrangChu.classList.add(loai);
-        }
-
-        function moKhungVip() {
-            khungVipTop.classList.add("open");
-        }
-
-        function dongKhungVip() {
-            khungVipTop.classList.remove("open");
-        }
-
-        function capNhatHienThiMaChuyenDoi(thongTin) {
-            if (!thongTin) {
-                khungMaChuyenDoi.classList.remove("active");
-                maVipChuyenDoi.textContent = "----";
-                goiVipChuyenDoi.textContent = "";
-                return;
-            }
-
-            khungMaChuyenDoi.classList.add("active");
-            maVipChuyenDoi.textContent = thongTin.maVip;
-            goiVipChuyenDoi.innerHTML = `
-                <strong>Gói đang giữ:</strong> ${window.heThongVip.layTenDanhSachGoi(thongTin.danhSachGoi)}<br>
-                Mã này chỉ dùng cho đúng tài khoản hiện tại để chuyển quyền VIP cũ sang hệ mã mới.
-            `;
-        }
-
-        async function dongBoMaChuyenDoiHocSinh(user, duLieuHocSinh) {
-            // Kiểm tra cache trước để tránh gọi Firebase không cần thiết
-            const cached = window.heThongVip.layCacheDongBo(user.uid);
-            if (cached !== undefined) {
-                capNhatHienThiMaChuyenDoi(cached);
-                return cached;
-            }
-
-            const layDanhSachGoiCu = typeof window.heThongVip.layDanhSachGoiQuyenCuDaDangKy === "function"
-                ? window.heThongVip.layDanhSachGoiQuyenCuDaDangKy
-                : window.heThongVip.layDanhSachGoiQuyenCuCanChuyenDoi;
-            const danhSachGoiCuDaDangKy = layDanhSachGoiCu(duLieuHocSinh);
-            if (!danhSachGoiCuDaDangKy.length) {
-                capNhatHienThiMaChuyenDoi(null);
-                window.heThongVip.luuCacheDongBo(user.uid, null);
-                return null;
-            }
-
-            const hatGiongGoc = `${user.uid}|${danhSachGoiCuDaDangKy.map(goi => goi.maGoi).sort().join("|")}`;
-            let maVip = "";
-            let maRef = null;
-            let maSnap = null;
-            let duLieuMaHienTai = null;
-
-            for (let lanThu = 0; lanThu < 30; lanThu += 1) {
-                const hatGiong = lanThu === 0 ? hatGiongGoc : `${hatGiongGoc}|v2|${lanThu}`;
-                const maDangThu = window.heThongVip.taoMaVipHeThong(hatGiong);
-                const refDangThu = doc(db, "MaVip", maDangThu);
-                const snapDangThu = await getDoc(refDangThu);
-
-                if (!snapDangThu.exists()) {
-                    maVip = maDangThu;
-                    maRef = refDangThu;
-                    maSnap = snapDangThu;
-                    break;
-                }
-
-                const duLieuDangThu = snapDangThu.data();
-                const uidDuocCapDangThu = duLieuDangThu.uidDuocCap || "";
-                const uidDaSuDungDangThu = duLieuDangThu.uidDaSuDung || "";
-                if (!uidDuocCapDangThu || uidDuocCapDangThu === user.uid || uidDaSuDungDangThu === user.uid) {
-                    maVip = maDangThu;
-                    maRef = refDangThu;
-                    maSnap = snapDangThu;
-                    duLieuMaHienTai = duLieuDangThu;
-                    break;
-                }
-            }
-
-            if (!maVip || !maRef || !maSnap) {
-                capNhatHienThiMaChuyenDoi(null);
-                console.warn("Khong the tao ma VIP chuyen doi khong trung cho hoc sinh", user.uid);
-                return null;
-            }
-
-            const hoTen = duLieuHocSinh.Hoten || duLieuHocSinh.HoTen || "Học viên";
-            const email = duLieuHocSinh["E-mail"] || duLieuHocSinh.email || user.email || "";
-
-            const thongTin = { maVip, danhSachGoi: danhSachGoiCuDaDangKy };
-
-            if (maSnap.exists()) {
-                if (!duLieuMaHienTai) duLieuMaHienTai = maSnap.data();
-                const uidDuocCap = duLieuMaHienTai.uidDuocCap || "";
-                const uidDaSuDung = duLieuMaHienTai.uidDaSuDung || "";
-                const trangThaiMa = window.heThongVip.layTrangThaiMaVip(duLieuMaHienTai);
-
-                if (uidDuocCap && uidDuocCap !== user.uid) {
-                    capNhatHienThiMaChuyenDoi(null);
-                    return null;
-                }
-
-                if (trangThaiMa === "da_su_dung" || uidDaSuDung) {
-                    if (uidDaSuDung === user.uid || uidDuocCap === user.uid) {
-                        capNhatHienThiMaChuyenDoi(thongTin);
-                        return thongTin;
-                    }
-                    capNhatHienThiMaChuyenDoi(null);
-                    return null;
-                }
-            }
-
-            const duLieuLuu = {
-                maVip,
-                maGoi: danhSachGoiCuDaDangKy.length === 1 ? danhSachGoiCuDaDangKy[0].maGoi : "",
-                tenGoi: window.heThongVip.layTenDanhSachGoi(danhSachGoiCuDaDangKy),
-                nhom: danhSachGoiCuDaDangKy.length === 1 ? danhSachGoiCuDaDangKy[0].nhom : "multi",
-                he: danhSachGoiCuDaDangKy.length === 1 ? danhSachGoiCuDaDangKy[0].he : "multi",
-                truongQuyen: danhSachGoiCuDaDangKy.length === 1 ? danhSachGoiCuDaDangKy[0].truongQuyen : "",
-                truongHan: danhSachGoiCuDaDangKy.length === 1 ? danhSachGoiCuDaDangKy[0].truongHan : "",
-                danhSachGoi: danhSachGoiCuDaDangKy.map(goi => ({
-                    maGoi: goi.maGoi,
-                    tenGoi: goi.tenGoi,
-                    nhom: goi.nhom,
-                    he: goi.he,
-                    truongQuyen: goi.truongQuyen,
-                    truongHan: goi.truongHan
-                })),
-                maCacGoi: danhSachGoiCuDaDangKy.map(goi => goi.maGoi),
-                ngayHetHan: null,
-                soLanSuDungToiDa: 1,
-                soLanDaSuDung: 0,
-                trangThai: "CHUA_SU_DUNG",
-                uidDuocCap: user.uid,
-                emailDuocCap: email,
-                hoTenDuocCap: hoTen,
-                nguonMa: "HE_THONG_CHUYEN_DOI",
-                uidDaSuDung: "",
-                emailDaSuDung: "",
-                hoTenDaSuDung: "",
-                lichSuSuDung: [],
-                thoiGianCapNhat: serverTimestamp()
-            };
-
-            if (!maSnap.exists()) {
-                duLieuLuu.thoiGianTao = serverTimestamp();
-            }
-
-            try {
-                await setDoc(maRef, duLieuLuu, { merge: true });
-            } catch (error) {
-                console.warn("Khong the dong bo ma chuyen doi VIP:", error);
-            }
-
-            window.heThongVip.luuCacheDongBo(user.uid, thongTin);
-            capNhatHienThiMaChuyenDoi(thongTin);
-            return thongTin;
-        }
-
-        async function kichHoatMaVipTrangChu() {
-            const maVipNhap = window.heThongVip.dinhDangMaVip(inputMaVipTrangChu.value || "");
-            const nut = document.getElementById("kich-hoat-ma-vip-trang-chu");
-
-            if (!maVipNhap) {
-                datThongBaoMaVipTrangChu("Vui lòng nhập mã VIP hợp lệ.", "error");
-                return;
-            }
-
-            if (!userDangNhap) {
-                datThongBaoMaVipTrangChu("Bạn cần đăng nhập để kích hoạt mã VIP.", "error");
-                return;
-            }
-
-            nut.disabled = true;
-            datThongBaoMaVipTrangChu("Đang kiểm tra mã VIP...", "");
-
-            try {
-                const ketQua = await runTransaction(db, async transaction => {
-                    const maRef = doc(db, "MaVip", maVipNhap);
-                    const maSnap = await transaction.get(maRef);
-                    if (!maSnap.exists()) throw new Error("Mã VIP không tồn tại.");
-
-                    const duLieuMa = maSnap.data();
-                    const danhSachGoi = window.heThongVip.layDanhSachGoiTuMa(duLieuMa);
-                    const trangThaiMa = window.heThongVip.layTrangThaiMaVip(duLieuMa);
-                    const soLanToiDa = Math.max(1, Number(duLieuMa.soLanSuDungToiDa || 1));
-                    const soLanDaSuDung = Math.max(0, Number(duLieuMa.soLanDaSuDung || 0));
-
-                    if (trangThaiMa === "da_su_dung") throw new Error("Mã VIP này đã được sử dụng.");
-                    if (trangThaiMa === "het_han") throw new Error("Mã VIP này đã hết hạn.");
-                    if (!danhSachGoi.length) throw new Error("Mã VIP chưa có cấu hình gói hợp lệ.");
-                    if (duLieuMa.uidDuocCap && duLieuMa.uidDuocCap !== userDangNhap.uid) {
-                        throw new Error("Mã VIP này chỉ dùng cho tài khoản đã được cấp.");
-                    }
-
-                    const hocSinhRef = doc(db, "HocSinh", userDangNhap.uid);
-                    const hocSinhSnap = await transaction.get(hocSinhRef);
-                    const duLieuHocSinh = hocSinhSnap.exists() ? hocSinhSnap.data() : {};
-                    const hoTen = duLieuHocSinh.Hoten || duLieuHocSinh.HoTen || "";
-                    const email = duLieuHocSinh["E-mail"] || duLieuHocSinh.email || userDangNhap.email || "";
-                    const capNhatQuyen = window.heThongVip.taoCapNhatQuyenTuDanhSachGoi(danhSachGoi, duLieuMa.ngayHetHan);
-                    if (!Object.keys(capNhatQuyen).length) throw new Error("Mã VIP chưa có cấu hình gói hợp lệ.");
-
-                    const soLanSauKhiDung = soLanDaSuDung + 1;
-                    const lichSuSuDung = Array.isArray(duLieuMa.lichSuSuDung) ? duLieuMa.lichSuSuDung.slice(-19) : [];
-                    const banGhiSuDung = {
-                        uid: userDangNhap.uid,
-                        email,
-                        hoTen,
-                        thoiGianSuDung: new Date().toISOString()
-                    };
-
-                    transaction.set(hocSinhRef, {
-                        ...capNhatQuyen,
-                        maVipKichHoatGanNhat: maVipNhap
-                    }, { merge: true });
-
-                    transaction.update(maRef, {
-                        trangThai: soLanSauKhiDung >= soLanToiDa ? "DA_SU_DUNG" : "CON_LUOT",
-                        soLanDaSuDung: soLanSauKhiDung,
-                        uidDaSuDung: userDangNhap.uid,
-                        emailDaSuDung: email,
-                        hoTenDaSuDung: hoTen,
-                        lichSuSuDung: [...lichSuSuDung, banGhiSuDung]
-                    });
-
-                    return {
-                        duLieuHocSinh: {
-                            ...duLieuHocSinh,
-                            maVipKichHoatGanNhat: maVipNhap,
-                            ...capNhatQuyen
-                        },
-                        danhSachGoi
-                    };
-                });
-
-                datThongBaoMaVipTrangChu(`Kích hoạt thành công: ${window.heThongVip.layTenDanhSachGoi(ketQua.danhSachGoi)}.`, "success");
-                inputMaVipTrangChu.value = "";
-                window.heThongVip.xoaCacheDongBo(userDangNhap.uid);
-                window.heThongVip.xoaCacheHocSinh(userDangNhap.uid);
-                await dongBoMaChuyenDoiHocSinh(userDangNhap, ketQua.duLieuHocSinh);
-            } catch (error) {
-                datThongBaoMaVipTrangChu(error.message || "Không thể kích hoạt mã VIP.", "error");
-            } finally {
-                nut.disabled = false;
-            }
-        }
-
-        async function kichHoatMaVipTrangChuV2() {
-            const maVipNhap = window.heThongVip.dinhDangMaVip(inputMaVipTrangChu.value || "");
-            const nut = document.getElementById("kich-hoat-ma-vip-trang-chu");
-
-            if (!maVipNhap) {
-                datThongBaoMaVipTrangChu("Vui lòng nhập mã VIP hợp lệ.", "error");
-                return;
-            }
-
-            if (!userDangNhap) {
-                datThongBaoMaVipTrangChu("Bạn cần đăng nhập để kích hoạt mã VIP.", "error");
-                return;
-            }
-
-            nut.disabled = true;
-            datThongBaoMaVipTrangChu("Đang kiểm tra mã VIP...", "");
-
-            try {
-                const maRef = doc(db, "MaVip", maVipNhap);
-                let maSnap = await getDoc(maRef);
-                if (!maSnap.exists()) throw new Error("Mã VIP không tồn tại.");
-
-                let duLieuMa = maSnap.data();
-                let danhSachGoi = window.heThongVip.layDanhSachGoiTuMa(duLieuMa);
-                let trangThaiMa = window.heThongVip.layTrangThaiMaVip(duLieuMa);
-
-                if (trangThaiMa === "da_su_dung" && duLieuMa.uidDaSuDung !== userDangNhap.uid) {
-                    throw new Error("Mã VIP này đã được sử dụng.");
-                }
-                if (trangThaiMa === "het_han") throw new Error("Mã VIP này đã hết hạn.");
-                if (!danhSachGoi.length) throw new Error("Mã VIP chưa có cấu hình gói hợp lệ.");
-                if (duLieuMa.uidDuocCap && duLieuMa.uidDuocCap !== userDangNhap.uid) {
-                    throw new Error("Mã VIP này chỉ dùng cho tài khoản đã được cấp.");
-                }
-
-                const hocSinhRef = doc(db, "HocSinh", userDangNhap.uid);
-                const hocSinhSnap = await getDoc(hocSinhRef);
-                const duLieuHocSinh = hocSinhSnap.exists() ? hocSinhSnap.data() : {};
-                const hoTen = duLieuHocSinh.Hoten || duLieuHocSinh.HoTen || "";
-                const email = duLieuHocSinh["E-mail"] || duLieuHocSinh.email || userDangNhap.email || "";
-                const capNhatQuyen = window.heThongVip.taoCapNhatQuyenTuDanhSachGoi(danhSachGoi, duLieuMa.ngayHetHan);
-                if (!Object.keys(capNhatQuyen).length) throw new Error("Mã VIP chưa có cấu hình gói hợp lệ.");
-
-                if (!(trangThaiMa === "da_su_dung" && duLieuMa.uidDaSuDung === userDangNhap.uid)) {
-                    await runTransaction(db, async transaction => {
-                        const maSnapMoi = await transaction.get(maRef);
-                        if (!maSnapMoi.exists()) throw new Error("Mã VIP không tồn tại.");
-
-                        const duLieuMaMoi = maSnapMoi.data();
-                        const danhSachGoiMoi = window.heThongVip.layDanhSachGoiTuMa(duLieuMaMoi);
-                        const trangThaiMoi = window.heThongVip.layTrangThaiMaVip(duLieuMaMoi);
-                        const soLanToiDa = Math.max(1, Number(duLieuMaMoi.soLanSuDungToiDa || 1));
-                        const soLanDaSuDung = Math.max(0, Number(duLieuMaMoi.soLanDaSuDung || 0));
-
-                        if (trangThaiMoi === "da_su_dung" && duLieuMaMoi.uidDaSuDung !== userDangNhap.uid) {
-                            throw new Error("Mã VIP này đã được sử dụng.");
-                        }
-                        if (trangThaiMoi === "het_han") throw new Error("Mã VIP này đã hết hạn.");
-                        if (!danhSachGoiMoi.length) throw new Error("Mã VIP chưa có cấu hình gói hợp lệ.");
-                        if (duLieuMaMoi.uidDuocCap && duLieuMaMoi.uidDuocCap !== userDangNhap.uid) {
-                            throw new Error("Mã VIP này chỉ dùng cho tài khoản đã được cấp.");
-                        }
-                        if (trangThaiMoi === "da_su_dung" && duLieuMaMoi.uidDaSuDung === userDangNhap.uid) {
-                            return;
-                        }
-
-                        const soLanSauKhiDung = soLanDaSuDung + 1;
-                        const lichSuSuDung = Array.isArray(duLieuMaMoi.lichSuSuDung) ? duLieuMaMoi.lichSuSuDung.slice(-19) : [];
-                        const banGhiSuDung = {
-                            uid: userDangNhap.uid,
-                            email,
-                            hoTen,
-                            thoiGianSuDung: new Date().toISOString()
-                        };
-
-                        transaction.update(maRef, {
-                            trangThai: soLanSauKhiDung >= soLanToiDa ? "DA_SU_DUNG" : "CON_LUOT",
-                            soLanDaSuDung: soLanSauKhiDung,
-                            uidDaSuDung: userDangNhap.uid,
-                            emailDaSuDung: email,
-                            hoTenDaSuDung: hoTen,
-                            lichSuSuDung: [...lichSuSuDung, banGhiSuDung]
-                        });
-                    });
-
-                }
-
-                await setDoc(hocSinhRef, {
-                    ...capNhatQuyen,
-                    maVipKichHoatGanNhat: maVipNhap
-                }, { merge: true });
-
-                const ketQua = {
-                    duLieuHocSinh: {
-                        ...duLieuHocSinh,
-                        maVipKichHoatGanNhat: maVipNhap,
-                        ...capNhatQuyen
-                    },
-                    danhSachGoi
-                };
-
-                datThongBaoMaVipTrangChu(`Kích hoạt thành công: ${window.heThongVip.layTenDanhSachGoi(ketQua.danhSachGoi)}.`, "success");
-                inputMaVipTrangChu.value = "";
-                window.heThongVip.xoaCacheDongBo(userDangNhap.uid);
-                window.heThongVip.xoaCacheHocSinh(userDangNhap.uid);
-                await dongBoMaChuyenDoiHocSinh(userDangNhap, ketQua.duLieuHocSinh);
-            } catch (error) {
-                datThongBaoMaVipTrangChu(error.message || "Không thể kích hoạt mã VIP.", "error");
-            } finally {
-                nut.disabled = false;
-            }
-        }
-
-        // 1. CHỨC NĂNG HIỂN THỊ TÊN KHI ĐĂNG NHẬP
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                userDangNhap = user;
-                if(authButtons) authButtons.style.display = "none";
-                if(userProfile) userProfile.style.display = "flex";
-                if(sidebarUser) sidebarUser.style.display = "flex";
-                if(vipTopEntry) vipTopEntry.style.display = "inline-flex";
-
-                let duLieuHocSinh = window.heThongVip ? window.heThongVip.layCacheHocSinh(user.uid) : undefined;
-                if (!duLieuHocSinh) {
-                    const docRef = doc(db, "HocSinh", user.uid);
-                    const docSnap = await getDoc(docRef);
-                    if (docSnap.exists()) {
-                        duLieuHocSinh = docSnap.data();
-                        if (window.heThongVip) window.heThongVip.luuCacheHocSinh(user.uid, duLieuHocSinh);
-                    } else {
-                        duLieuHocSinh = {};
-                    }
-                }
-
-                if (Object.keys(duLieuHocSinh).length > 0) {
-                    const tenHV = duLieuHocSinh.Hoten || duLieuHocSinh.HoTen || "Học viên";
-                    if(navName) navName.innerText = "Chào, " + tenHV; // Giữ form chào như bản cũ
-                    if(sideName) sideName.innerText = tenHV;
-                    try {
-                        await dongBoMaChuyenDoiHocSinh(user, duLieuHocSinh);
-                    } catch (error) {
-                        console.warn("Khong the hien thi ma chuyen doi VIP:", error);
-                        capNhatHienThiMaChuyenDoi(null);
-                    }
-                } else {
-                    capNhatHienThiMaChuyenDoi(null);
-                }
-            } else {
-                userDangNhap = null;
-                if(authButtons) authButtons.style.display = "flex";
-                if(userProfile) userProfile.style.display = "none";
-                if(sidebarUser) sidebarUser.style.display = "none";
-                if(vipTopEntry) vipTopEntry.style.display = "none";
-                datThongBaoMaVipTrangChu("");
-                capNhatHienThiMaChuyenDoi(null);
-            }
-        });
-
-        // 2. CHỨC NĂNG ĐĂNG XUẤT
-        window.logout = function() {
-            if(confirm("Bạn có chắc chắn muốn đăng xuất khỏi hệ thống?")) {
-                window.heThongVip.xoaToanBoCacheDongBo();
-                signOut(auth).then(() => {
-                    window.location.reload(); 
-                }).catch((error) => console.error("Lỗi đăng xuất:", error));
-            }
-        };
-
-        document.getElementById("nut-mo-khung-vip").addEventListener("click", event => {
-            event.stopPropagation();
-            khungVipTop.classList.toggle("open");
-        });
-
-        document.getElementById("nut-dong-khung-vip").addEventListener("click", dongKhungVip);
-        document.getElementById("nut-dung-ma-chuyen-doi").addEventListener("click", () => {
-            if (!maVipChuyenDoi.textContent || maVipChuyenDoi.textContent === "----") return;
-            inputMaVipTrangChu.value = maVipChuyenDoi.textContent;
-            moKhungVip();
-            inputMaVipTrangChu.focus();
-        });
-
-        document.getElementById("nut-sao-chep-ma-chuyen-doi").addEventListener("click", async () => {
-            const maVip = maVipChuyenDoi.textContent;
-            if (!maVip || maVip === "----") return;
-            try {
-                await navigator.clipboard.writeText(maVip);
-                datThongBaoMaVipTrangChu("Đã sao chép mã VIP của bạn.", "success");
-            } catch (error) {
-                datThongBaoMaVipTrangChu("Không thể sao chép tự động. Bạn hãy sao chép thủ công mã đang hiển thị.", "error");
-            }
-        });
-
-        document.getElementById("kich-hoat-ma-vip-trang-chu").addEventListener("click", kichHoatMaVipTrangChuV2);
-        inputMaVipTrangChu.addEventListener("keydown", event => {
-            if (event.key === "Enter") kichHoatMaVipTrangChuV2();
-        });
-
-        document.addEventListener("click", event => {
-            if (!vipTopEntry.contains(event.target)) {
-                dongKhungVip();
-            }
-        });
-    </script>
+
+<!-- HEADER -->
+
+<header>
+
+
+<div class="logo">
+<i class="fa-solid fa-graduation-cap"></i>
+HS Academy
+</div>
+
+
+<nav>
+
+<a class="active">
+Trang chủ
+</a>
+
+<a>
+Lập trình
+</a>
+
+<a>
+TSA
+</a>
+
+<a>
+THPT
+</a>
+
+<a>
+Tài liệu
+</a>
+
+
+</nav>
+
+
+
+<div class="header-right">
+
+
+<div class="search">
+
+<i class="fa fa-search"></i>
+
+<input placeholder="Tìm bài tập, khóa học...">
+
+</div>
+
+
+<button class="vip">
+🔥 VIP
+</button>
+
+
+<div class="avatar">
+
+<img src="images/avatar.png">
+
+</div>
+
+
+</div>
+
+
+</header>
+
+
+
+
+
+<div class="layout">
+
+
+<!-- SIDEBAR -->
+
+
+<aside>
+
+
+<h3>
+HỌC TẬP
+</h3>
+
+
+<div class="menu active">
+
+<i class="fa fa-house"></i>
+
+Dashboard
+
+</div>
+
+
+
+<div class="menu">
+
+<i class="fa fa-code"></i>
+
+Luyện lập trình
+
+</div>
+
+
+
+<div class="sub">
+
+C++ cơ bản
+
+<br>
+Thuật toán
+
+<br>
+Data Structure
+
+<br>
+Codeforces
+
+</div>
+
+
+
+
+<div class="menu">
+
+<i class="fa fa-brain"></i>
+
+Luyện TSA
+
+</div>
+
+
+<div class="sub">
+
+Toán tư duy
+
+<br>
+
+Đọc hiểu
+
+<br>
+
+Khoa học
+
+
+</div>
+
+
+
+
+<div class="menu">
+
+<i class="fa fa-book"></i>
+
+THPT Quốc Gia
+
+</div>
+
+
+<div class="sub">
+
+Toán
+
+<br>
+
+Anh
+
+<br>
+
+Lý
+
+<br>
+
+Hóa
+
+</div>
+
+
+
+<h3>
+CÁ NHÂN
+</h3>
+
+
+<div class="menu">
+
+<i class="fa fa-chart-line"></i>
+
+Tiến độ
+
+</div>
+
+
+
+<div class="menu">
+
+<i class="fa fa-trophy"></i>
+
+Xếp hạng
+
+</div>
+
+
+
+<div class="menu">
+
+<i class="fa fa-user"></i>
+
+Tài khoản
+
+</div>
+
+
+
+</aside>
+
+
+
+
+
+<!-- MAIN -->
+
+
+<main>
+
+
+<section class="hero">
+
+
+<div>
+
+
+<h1>
+Chinh phục đại học
+<br>
+
+và trở thành lập trình viên
+</h1>
+
+
+<p>
+Luyện TSA • THPT • Thuật toán mỗi ngày
+</p>
+
+
+
+<button>
+Bắt đầu học
+</button>
+
+
+</div>
+
+
+<img src="images/banner.png">
+
+
+</section>
+
+
+
+
+
+
+<h2>
+Khóa học nổi bật
+</h2>
+
+
+<div class="courses">
+
+
+<div class="card blue">
+
+
+<i class="fa fa-code"></i>
+
+
+<h3>
+Lập trình C++
+</h3>
+
+
+<p>
+Từ cơ bản đến thuật toán nâng cao
+</p>
+
+
+<span>
+120 bài tập
+</span>
+
+
+</div>
+
+
+
+
+
+<div class="card orange">
+
+
+<i class="fa fa-brain"></i>
+
+
+<h3>
+TSA 2027
+</h3>
+
+
+<p>
+Luyện tư duy ĐHQG & Bách Khoa
+</p>
+
+
+<span>
+50 đề thi
+</span>
+
+
+</div>
+
+
+
+
+
+<div class="card red">
+
+
+<i class="fa fa-book"></i>
+
+
+<h3>
+THPT Quốc Gia
+</h3>
+
+
+<p>
+Ôn thi toàn diện
+</p>
+
+
+<span>
+1000 câu hỏi
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<section class="practice">
+
+
+<h2>
+🔥 Bài luyện hôm nay
+</h2>
+
+
+
+<div class="problem">
+
+
+<div>
+
+<h3>
+Two Sum
+</h3>
+
+<p>
+Thuật toán mảng - Easy
+</p>
+
+</div>
+
+
+<button>
+Làm bài
+</button>
+
+
+</div>
+
+
+
+
+<div class="problem">
+
+
+<div>
+
+<h3>
+TSA Logic 01
+</h3>
+
+<p>
+Tư duy định lượng
+</p>
+
+</div>
+
+
+<button>
+Làm bài
+</button>
+
+
+</div>
+
+
+
+
+<div class="problem">
+
+
+<div>
+
+<h3>
+Hàm số THPT
+</h3>
+
+<p>
+Toán 12
+</p>
+
+</div>
+
+
+<button>
+Làm bài
+</button>
+
+
+</div>
+
+
+</section>
+
+
+
+
+</main>
+
+
+
+
+
+<!-- RIGHT -->
+
+
+<aside class="right">
+
+
+<h2>
+Thống kê
+</h2>
+
+
+
+<div class="stat">
+
+🔥
+
+Streak
+
+<br>
+
+<b>
+12 ngày
+</b>
+
+</div>
+
+
+
+
+<div class="stat">
+
+💻
+
+Đã giải
+
+<br>
+
+<b>
+245 bài
+</b>
+
+</div>
+
+
+
+
+<div class="stat">
+
+🏆
+
+Rank
+
+<br>
+
+<b>
+Top 10%
+</b>
+
+</div>
+
+
+
+</aside>
+
+
+
+
+</div>
+
+
+
+<script src="script.js"></script>
+
+
 </body>
 </html>
